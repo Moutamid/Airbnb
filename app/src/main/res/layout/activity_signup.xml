@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back"
+    android:orientation="vertical"
+    tools:context=".activities.SignupActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Finish signing up"
+            android:fontFamily="@font/roboto"
+            android:textSize="16sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white" />
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12sp"
+            android:background="@drawable/et_bg"
+            android:backgroundTint="@color/back"
+            android:layout_marginStart="15sp"
+            android:src="@drawable/back" />
+
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="First name"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_margin="15sp"
+                android:textSize="20sp"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/firstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_bg"
+                android:hint=""
+                android:padding="12sp"
+                android:fontFamily="@font/roboto"
+                android:textColorHint="@color/text_off"
+                android:textColor="@color/text"
+                android:inputType="textPersonName"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last name"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_margin="15sp"
+                android:textSize="20sp"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/lastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_bg"
+                android:hint=""
+                android:padding="12sp"
+                android:fontFamily="@font/roboto"
+                android:textColorHint="@color/text_off"
+                android:textColor="@color/text"
+                android:inputType="textPersonName"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Make sure it matches the name on your government ID."
+                android:fontFamily="@font/roboto"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp"
+                android:layout_marginTop="8sp"
+                android:textSize="15sp"
+                android:textColor="@color/text" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date of Birth"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_margin="15sp"
+                android:textSize="20sp"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/dob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_bg"
+                android:padding="12sp"
+                android:fontFamily="@font/roboto"
+                android:textColorHint="@color/text_off"
+                android:textColor="@color/text"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="To sign up, you need to be at least 18. Your birthday won’t be shared with other people who use Airbnb."
+                android:fontFamily="@font/roboto"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp"
+                android:layout_marginTop="8sp"
+                android:textSize="15sp"
+                android:textColor="@color/text" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_margin="15sp"
+                android:textSize="20sp"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_bg"
+                android:hint="example@gmail.com"
+                android:padding="12sp"
+                android:fontFamily="@font/roboto"
+                android:textColorHint="@color/text_off"
+                android:textColor="@color/text"
+                android:inputType="textPersonName"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_margin="15sp"
+                android:textSize="20sp"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_bg"
+                android:hint=""
+                android:padding="12sp"
+                android:fontFamily="@font/roboto"
+                android:textColorHint="@color/text_off"
+                android:textColor="@color/text"
+                android:inputType="textPassword"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/password"
+                android:fontFamily="@font/roboto"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp"
+                android:layout_marginTop="8sp"
+                android:textSize="15sp"
+                android:textColor="@color/text" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/agrrement"
+                android:fontFamily="@font/roboto"
+                android:layout_margin="15sp"
+                android:textSize="15sp"
+                android:textColor="@color/text" />
+
+            <Button
+                android:id="@+id/continueBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12sp"
+                android:layout_margin="15sp"
+                android:text="Agree and continue"
+                android:backgroundTint="@color/blue"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/back"
+    tools:context=".activities.LoginActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Log in or sign Up"
+        android:fontFamily="@font/roboto"
+        android:layout_marginTop="15sp"
+        android:textSize="16sp"
+        android:textColor="@color/white" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Country/Region"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_margin="15sp"
+                android:textSize="20sp"
+                android:textColor="@color/white" />
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/cpp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp"
+                app:ccpDialog_textColor="@color/text"
+                app:ccp_contentColor="@color/text"
+                app:ccp_showArrow="false"
+                app:ccp_textGravity="LEFT"
+                app:ccpDialog_cornerRadius="8sp"
+                app:ccpDialog_backgroundColor="@color/back"
+                app:ccp_autoDetectCountry="true"
+                android:background="@drawable/et_bg"
+                app:ccp_showFlag="false"
+                android:gravity="start" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phone number"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_margin="15sp"
+                android:textSize="20sp"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_bg"
+                android:hint=""
+                android:padding="12sp"
+                android:fontFamily="@font/roboto"
+                android:textColorHint="@color/text_off"
+                android:textColor="@color/text"
+                android:inputType="phone"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="We’ll text you to confirm your number.\nStandard message and data rates apply."
+                android:fontFamily="@font/roboto"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp"
+                android:layout_marginTop="8sp"
+                android:textSize="15sp"
+                android:textColor="@color/text" />
+
+            <Button
+                android:id="@+id/continueBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12sp"
+                android:layout_margin="15sp"
+                android:text="Continue"
+                android:backgroundTint="@color/blue"
+                android:fontFamily="@font/roboto"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15sp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0sp"
+                    android:layout_height="1sp"
+                    android:background="@color/line"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="or"
+                    android:textColor="@color/text"
+                    android:fontFamily="@font/roboto"
+                    android:layout_marginEnd="10sp"
+                    android:layout_marginStart="10sp" />
+
+                <View
+                    android:layout_width="0sp"
+                    android:layout_height="1sp"
+                    android:background="@color/line"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp"
+                android:background="@drawable/border">
+
+                <Button
+                    android:id="@+id/email"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light_italic"
+                    android:padding="12sp"
+                    android:backgroundTint="@color/back"
+                    android:drawableLeft="@drawable/email"
+                    android:text="CONTINUE WITH EMAIL"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp"
+                android:layout_marginTop="8sp"
+                android:background="@drawable/border">
+
+                <Button
+                    android:id="@+id/google"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/back"
+                    android:drawableLeft="@drawable/google"
+                    android:fontFamily="@font/roboto_light_italic"
+                    android:padding="12sp"
+                    android:text="CONTINUE WITH GOOGLE"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/login"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/back"
+                android:fontFamily="@font/roboto_light_italic"
+                android:padding="12sp"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp"
+                android:layout_marginTop="20sp"
+                android:text="LOG IN"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
