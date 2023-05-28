@@ -35,12 +35,16 @@ public class Constants {
     public static final String phone = "phone";
     public static final String DATE_FORMAT = "dd/MM/yyyy";
     public static final String YEAR_FORMAT = "yyyy";
+    public static final String DATE = "dd MMM";
 
     public static String getFormatedDate(long date){
         return new SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(date);
     }
     public static String getFormatedYear(long date){
         return new SimpleDateFormat(YEAR_FORMAT, Locale.getDefault()).format(date);
+    }
+    public static String getDate(long date){
+        return new SimpleDateFormat(DATE, Locale.getDefault()).format(date);
     }
 
     public static void initDialog(Context context){
