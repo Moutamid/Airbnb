@@ -76,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         binding.email.setOnClickListener(v -> {
+            Stash.put(Constants.phone, false);
             startActivity(new Intent(this, SignupActivity.class));
             finish();
         });
@@ -121,8 +122,9 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = task.getResult().getUser();
                             Constants.dismissDialog();
+                            Stash.put(Constants.phone, true);
                             // Update UI
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, SignupActivity.class));
                             finish();
                         } else {
                             // Sign in failed, display a message and update the UI

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.fxn.stash.Stash;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.moutamid.airbnb.MainActivity;
@@ -48,40 +49,68 @@ public class SignupActivity extends AppCompatActivity {
         });
 
         binding.continueBtn.setOnClickListener(v -> {
-            if (valid()){
+            if (valid()) {
                 Constants.showDialog();
-                Constants.auth().createUserWithEmailAndPassword(
-                        binding.email.getText().toString(),
-                        binding.password.getText().toString()
-                ).addOnSuccessListener(authResult -> {
-                    UserModel userModel = new UserModel(
-                            authResult.getUser().getUid(),
-                            (binding.firstName.getText().toString() + " " + binding.lastName.getText().toString()),
-                            Constants.getFormatedDate(calendar.getTime().getTime()),
+                if (Stash.getBoolean(Constants.phone, false)){
+                    saveData();
+                } else {
+                    Constants.auth().createUserWithEmailAndPassword(
                             binding.email.getText().toString(),
-                            binding.password.getText().toString(), "", ""
-                    );
-                    Constants.databaseReference().child(Constants.USER).child(authResult.getUser().getUid())
-                            .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Constants.dismissDialog();
-                                        startActivity(new Intent(SignupActivity.this, MainActivity.class));
-                                        finish();
-                                    } else {
-                                        Constants.dismissDialog();
-                                        Toast.makeText(SignupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            binding.password.getText().toString()
+                    ).addOnSuccessListener(authResult -> {
+                        UserModel userModel = new UserModel(
+                                authResult.getUser().getUid(),
+                                (binding.firstName.getText().toString() + " " + binding.lastName.getText().toString()),
+                                Constants.getFormatedDate(calendar.getTime().getTime()),
+                                binding.email.getText().toString(),
+                                binding.password.getText().toString(), "", ""
+                        );
+                        Constants.databaseReference().child(Constants.USER).child(authResult.getUser().getUid())
+                                .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Constants.dismissDialog();
+                                            startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                                            finish();
+                                        } else {
+                                            Constants.dismissDialog();
+                                            Toast.makeText(SignupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            });
-                }).addOnFailureListener(e -> {
-                    Constants.dismissDialog();
-                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                                });
+                    }).addOnFailureListener(e -> {
+                        Constants.dismissDialog();
+                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+                }
             }
         });
 
+    }
+
+    private void saveData() {
+        UserModel userModel = new UserModel(
+                Constants.auth().getCurrentUser().getUid(),
+                (binding.firstName.getText().toString() + " " + binding.lastName.getText().toString()),
+                Constants.getFormatedDate(calendar.getTime().getTime()),
+                binding.email.getText().toString(),
+                binding.password.getText().toString(), Stash.getString("num"), ""
+        );
+        Constants.databaseReference().child(Constants.USER).child(Constants.auth().getCurrentUser().getUid())
+                .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Constants.dismissDialog();
+                            startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                            finish();
+                        } else {
+                            Constants.dismissDialog();
+                            Toast.makeText(SignupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private boolean valid() {

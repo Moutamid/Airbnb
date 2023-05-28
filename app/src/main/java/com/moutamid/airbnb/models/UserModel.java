@@ -4,6 +4,8 @@ public class UserModel {
 
     String ID, name, dob, email, password, phone, image;
 
+    public UserModel() {
+    }
 
     public UserModel(String ID, String name, String dob, String email, String password, String phone, String image) {
         this.ID = ID;

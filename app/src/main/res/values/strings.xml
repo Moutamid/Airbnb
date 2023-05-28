@@ -4,4 +4,5 @@
     <string name="agrrement">By selecting <b>Agree and continue</b> below, I agree to Airbnb’s <u>Terms of Service</u>, <u>Payments Terms of Service</u>, <u>Privacy Policy</u>, and <u>Nondiscrimination Policy</u>.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logout"><u>Log out</u></string>
 </resources>
