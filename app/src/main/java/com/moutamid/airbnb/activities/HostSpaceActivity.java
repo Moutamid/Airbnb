@@ -21,13 +21,21 @@ import android.widget.Toast;
 
 import com.fxn.stash.Stash;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.material.snackbar.Snackbar;
 import com.moutamid.airbnb.R;
 import com.moutamid.airbnb.adapters.AddImageAdapter;
 import com.moutamid.airbnb.constant.Constants;
 import com.moutamid.airbnb.databinding.ActivityHostSpaceBinding;
+import com.moutamid.airbnb.models.SpaceModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class HostSpaceActivity extends AppCompatActivity {
@@ -46,6 +54,8 @@ public class HostSpaceActivity extends AppCompatActivity {
         Constants.initDialog(this);
 
         imagesList = new ArrayList<>();
+
+        binding.back.setOnClickListener(v -> finish());
 
         DatePickerDialog.OnDateSetListener startDate = (datePicker, year, month, day) -> {
             calendar.set(Calendar.YEAR, year);
@@ -205,6 +215,58 @@ public class HostSpaceActivity extends AppCompatActivity {
     }
 
     private void uploadData() {
+        String ID = UUID.randomUUID().toString();
+        String currentDate = new SimpleDateFormat("ddMMyyyyhhmmss", Locale.getDefault()).format(new Date());
+        for (int count =0; count<imagesList.size(); count++){
+            int finalCount = count;
+            Constants.storageReference(Constants.auth().getCurrentUser().getUid())
+                    .child(currentDate+"_image"+count)
+                    .putFile(imagesList.get(count))
+                    .addOnSuccessListener(taskSnapshot -> {
+                        taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
+                            Map<String, String> map = new HashMap<>();
+                            map.put("image", uri.toString());
+                            if (finalCount == 0){
+                                uploadProduct(ID, uri.toString());
+                            }
+                            Constants.databaseReference().child(Constants.ProductImages)
+                                    .child(Constants.auth().getCurrentUser().getUid()).child(ID)
+                                    .push().setValue(map).addOnSuccessListener(unused -> {
+                                        if (finalCount == imagesList.size()-1) {
+                                            Constants.dismissDialog();
+                                            Toast.makeText(this, "Space hosted successfully", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Constants.dismissDialog();
+                                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    });
+                        }).addOnFailureListener(e -> {
+                            Constants.dismissDialog();
+                            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+                    }).addOnFailureListener(e -> {
+                        Constants.dismissDialog();
+                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        }
+    }
+
+    private void uploadProduct(String id, String link) {
+        SpaceModel model = new SpaceModel(
+                id, Constants.auth().getCurrentUser().getUid(),
+                binding.title.getText().toString(), link,
+                binding.desc.getText().toString(), binding.city.getText().toString(),binding.country.getText().toString(),
+                Double.parseDouble(binding.price.getText().toString()), new Date().getTime(), Long.parseLong(binding.guests.getText().toString()),
+                Long.parseLong(binding.beds.getText().toString()), Long.parseLong(binding.baths.getText().toString()),
+                binding.startDate.getText().toString(), binding.endDate.getText().toString(),
+                0,0,0,0,0,0
+        );
+
+        Constants.databaseReference().child(Constants.SPACE).child(Constants.auth().getCurrentUser().getUid())
+                .child(id).setValue(model)
+                .addOnSuccessListener(unused -> {})
+                .addOnFailureListener(e -> Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show());
 
     }
 

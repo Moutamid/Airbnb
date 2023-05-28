@@ -164,7 +164,7 @@
                 android:fontFamily="@font/roboto"
                 android:textColorHint="@color/text_off"
                 android:textColor="@color/text"
-                android:inputType="textPersonName" />
+                android:inputType="textMultiLine" />
 
             <TextView
                 android:layout_width="match_parent"

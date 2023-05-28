@@ -33,6 +33,8 @@ public class Constants {
     public static final int RC_SIGN_IN = 9001;
     public static final String USER = "user";
     public static final String phone = "phone";
+    public static final String ProductImages = "hotel_images";
+    public static final String SPACE = "space";
     public static final String DATE_FORMAT = "dd/MM/yyyy";
     public static final String YEAR_FORMAT = "yyyy";
     public static final String DATE = "dd MMM";
