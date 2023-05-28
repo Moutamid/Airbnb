@@ -108,8 +108,6 @@ public class SignupActivity extends AppCompatActivity {
         if (!binding.dob.getText().toString().isEmpty()){
             int current_year = Integer.parseInt(Constants.getFormatedYear(new Date().getTime()));
             int selected_year = Integer.parseInt(Constants.getFormatedYear(calendar.getTime().getTime()));
-            Log.d("dateChe", "Selected " + selected_year);
-            Log.d("dateChe", "current_year " + current_year);
             if (current_year - selected_year < 18){
                 Toast.makeText(this, "You must be above 18 years old", Toast.LENGTH_SHORT).show();
                 return false;

@@ -12,4 +12,10 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/back</item>
     </style>
+
+    <style name="Dialog">
+        <item name="android:windowEnterAnimation">@animator/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@animator/slide_out_bottom</item>
+    </style>
+
 </resources>
