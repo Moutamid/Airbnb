@@ -1,5 +1,6 @@
 package com.moutamid.airbnb.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.airbnb.R;
+import com.moutamid.airbnb.activities.SearchActivity;
 import com.moutamid.airbnb.adapters.ExploreAdapter;
 import com.moutamid.airbnb.constant.Constants;
 import com.moutamid.airbnb.databinding.FragmentExploreBinding;
@@ -37,6 +39,10 @@ public class ExploreFragment extends Fragment {
         binding.recycler.setHasFixedSize(false);
 
         spaceList = new ArrayList<>();
+
+        binding.search.setOnClickListener(v -> {
+            startActivity(new Intent(requireContext(), SearchActivity.class));
+        });
 
         Constants.initDialog(requireContext());
         Constants.showDialog();
