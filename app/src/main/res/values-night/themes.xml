@@ -13,6 +13,19 @@
         <item name="android:statusBarColor">@color/back</item>
     </style>
 
+    <style name="Orange" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryVariant">@color/blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/orange</item>
+        <item name="colorSecondaryVariant">@color/orange</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/status</item>
+    </style>
+
     <style name="Dialog">
         <item name="android:windowEnterAnimation">@animator/slide_in_bottom</item>
         <item name="android:windowExitAnimation">@animator/slide_out_bottom</item>

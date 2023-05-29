@@ -38,8 +38,8 @@ public class ExploreFragment extends Fragment {
 
         spaceList = new ArrayList<>();
 
-        Constants.initLoadingDialog(requireContext());
-        Constants.showLoadingDialog();
+        Constants.initDialog(requireContext());
+        Constants.showDialog();
         getData();
 
         return binding.getRoot();
@@ -58,7 +58,7 @@ public class ExploreFragment extends Fragment {
                                 }
                             }
                         }
-                        Constants.dismissLoadingDialog();
+                        Constants.dismissDialog();
 
                         ExploreAdapter adapter = new ExploreAdapter(requireContext(), spaceList);
                         binding.recycler.setAdapter(adapter);
@@ -67,7 +67,7 @@ public class ExploreFragment extends Fragment {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Constants.dismissLoadingDialog();
+                        Constants.dismissDialog();
                         Toast.makeText(requireContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

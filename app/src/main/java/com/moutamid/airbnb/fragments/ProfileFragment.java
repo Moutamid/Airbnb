@@ -41,7 +41,6 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(getLayoutInflater(), container, false);
 
-        Constants.initLoadingDialog(requireContext());
         Constants.initDialog(requireContext());
         Constants.showDialog();
 
@@ -55,20 +54,20 @@ public class ProfileFragment extends Fragment {
             new AlertDialog.Builder(requireContext())
                     .setMessage("Are you sure you want to logout?")
                     .setPositiveButton("Logout", ((dialog, which) -> {
-                        Constants.showLoadingDialog();
+                        Constants.showDialog();
                         if (mGoogleSignInClient != null){
                             mGoogleSignInClient.signOut().addOnSuccessListener(unused -> {
-                                Constants.dismissLoadingDialog();
+                                Constants.dismissDialog();
                                 Constants.auth().signOut();
                                 startActivity(new Intent(requireContext(), SplashScreenActivity.class));
                                 requireActivity().finish();
                             }).addOnFailureListener(e -> {
-                                Constants.dismissLoadingDialog();
+                                Constants.dismissDialog();
                                 Toast.makeText(requireContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
                             });
                         } else {
                             new Handler().postDelayed(() -> {
-                                Constants.dismissLoadingDialog();
+                                Constants.dismissDialog();
                                 Constants.auth().signOut();
                                 startActivity(new Intent(requireContext(), SplashScreenActivity.class));
                                 requireActivity().finish();

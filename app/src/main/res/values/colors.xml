@@ -9,4 +9,6 @@
     <color name="orange">#BF6042</color>
     <color name="blue">#5788B6</color>
     <color name="dark">#272828</color>
+    <color name="transparent">#00000000</color>
+    <color name="status">#FFBF6042</color>
 </resources>

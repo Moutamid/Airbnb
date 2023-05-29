@@ -32,7 +32,9 @@ public class Constants {
     static Dialog loading_dialog;
     public static final int RC_SIGN_IN = 9001;
     public static final String USER = "user";
+    public static final String MODEL = "model";
     public static final String phone = "phone";
+    public static final String WISHLIST = "WISHLIST";
     public static final String ProductImages = "hotel_images";
     public static final String SPACE = "space";
     public static final String DATE_FORMAT = "dd/MM/yyyy";
@@ -52,7 +54,7 @@ public class Constants {
     public static void initDialog(Context context){
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.loading_dialog);
+        dialog.setContentView(R.layout.loading);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCancelable(false);
     }
@@ -65,21 +67,6 @@ public class Constants {
         dialog.dismiss();
     }
 
-    public static void initLoadingDialog(Context context){
-        loading_dialog = new Dialog(context);
-        loading_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        loading_dialog.setContentView(R.layout.loading);
-        loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        loading_dialog.setCancelable(false);
-    }
-
-    public static void showLoadingDialog(){
-        loading_dialog.show();
-    }
-
-    public static void dismissLoadingDialog(){
-        loading_dialog.dismiss();
-    }
     public static void checkApp(Activity activity) {
         String appName = "airbnb";
 
