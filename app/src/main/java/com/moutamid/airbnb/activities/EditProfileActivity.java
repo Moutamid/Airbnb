@@ -52,6 +52,8 @@ public class EditProfileActivity extends AppCompatActivity {
             showDialog();
         });
 
+        binding.back.setOnClickListener(v -> finish());
+
         Constants.initDialog(this);
         Constants.showDialog();
 
@@ -188,8 +190,8 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == IMAGEPICKER){
-            if (resultCode == RESULT_OK && data != null && data.getData() != null){
+        if (requestCode == IMAGEPICKER){
+            if (resultCode == RESULT_OK && data != null){
                 imageURI = data.getData();
                 Glide.with(EditProfileActivity.this).load(imageURI).addListener(new RequestListener<Drawable>() {
                     @Override
