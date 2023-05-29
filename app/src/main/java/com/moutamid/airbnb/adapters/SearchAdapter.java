@@ -1,17 +1,23 @@
 package com.moutamid.airbnb.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.fxn.stash.Stash;
 import com.moutamid.airbnb.R;
+import com.moutamid.airbnb.activities.DetailViewActivity;
+import com.moutamid.airbnb.constant.Constants;
 import com.moutamid.airbnb.models.SpaceModel;
 
 import java.util.ArrayList;
@@ -41,8 +47,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchVH> 
 
         holder.name.setText(name.getName());
 
-        holder.itemView.setOnClickListener(v -> {
+        Glide.with(context).load(name.getImage()).into(holder.image);
 
+        holder.itemView.setOnClickListener(v -> {
+            Stash.put(Constants.MODEL, name);
+            context.startActivity(new Intent(context, DetailViewActivity.class));
         });
     }
 
@@ -90,9 +99,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchVH> 
 
     public class SearchVH extends RecyclerView.ViewHolder{
         TextView name;
+        ImageView image;
         public SearchVH(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
+            image = itemView.findViewById(R.id.image);
         }
     }
 
