@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.moutamid.airbnb.R;
 import com.moutamid.airbnb.SplashScreenActivity;
 import com.moutamid.airbnb.activities.HostSpaceActivity;
+import com.moutamid.airbnb.activities.MySpaceActivity;
 import com.moutamid.airbnb.activities.ProfileActivity;
 import com.moutamid.airbnb.constant.Constants;
 import com.moutamid.airbnb.databinding.FragmentProfileBinding;
@@ -86,6 +87,9 @@ public class ProfileFragment extends Fragment {
 
         binding.host.setOnClickListener(v -> {
             startActivity(new Intent(requireContext(), HostSpaceActivity.class));
+        });
+        binding.mySpace.setOnClickListener(v -> {
+            startActivity(new Intent(requireContext(), MySpaceActivity.class));
         });
 
         Constants.databaseReference().child(Constants.USER).child(Constants.auth().getCurrentUser().getUid())

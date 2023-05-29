@@ -33,6 +33,7 @@ public class Constants {
     public static final int RC_SIGN_IN = 9001;
     public static final String USER = "user";
     public static final String MODEL = "model";
+    public static final String Rating = "Rating";
     public static final String phone = "phone";
     public static final String WISHLIST = "WISHLIST";
     public static final String ProductImages = "hotel_images";

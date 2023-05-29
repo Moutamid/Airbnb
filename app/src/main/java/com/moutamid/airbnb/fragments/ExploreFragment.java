@@ -51,6 +51,7 @@ public class ExploreFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()){
+                            spaceList.clear();
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                                 for (DataSnapshot snapshot1 : dataSnapshot.getChildren()){
                                     SpaceModel spaceModel = snapshot1.getValue(SpaceModel.class);

@@ -1,40 +1,64 @@
 package com.moutamid.airbnb.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.fxn.stash.Stash;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.moutamid.airbnb.R;
+import com.moutamid.airbnb.adapters.RatingAdapter;
 import com.moutamid.airbnb.constant.Constants;
 import com.moutamid.airbnb.databinding.ActivityDetailViewBinding;
+import com.moutamid.airbnb.models.RatingModel;
 import com.moutamid.airbnb.models.SpaceModel;
 import com.moutamid.airbnb.models.UserModel;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DetailViewActivity extends AppCompatActivity {
     ActivityDetailViewBinding binding;
     UserModel userModel;
     ArrayList<String> images;
     boolean isFavrt = false;
+    ArrayList<RatingModel> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityDetailViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         Constants.initDialog(this);
         Constants.showDialog();
+
         images = new ArrayList<>();
+        list = new ArrayList<>();
+
+        binding.recylerReview.setLayoutManager(new LinearLayoutManager(this));
+        binding.recylerReview.setHasFixedSize(false);
 
         binding.back.setOnClickListener(v -> {
             finish();
@@ -42,6 +66,12 @@ public class DetailViewActivity extends AppCompatActivity {
 
         SpaceModel model = (SpaceModel) Stash.getObject(Constants.MODEL, SpaceModel.class);
         ArrayList<SpaceModel> wish = Stash.getArrayList(Constants.WISHLIST, SpaceModel.class);
+
+        binding.review.setOnClickListener(v -> {
+            addReview(model, userModel);
+        });
+
+        getRating(model);
 
         for (SpaceModel fvrtModel : wish){
             if (fvrtModel.getID().equals(model.getID())){
@@ -78,6 +108,156 @@ public class DetailViewActivity extends AppCompatActivity {
                         getData(model);
                     }
                 });
+
+    }
+
+    private void getRating(SpaceModel model) {
+        Constants.databaseReference().child(Constants.Rating).child(model.getID())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            list.clear();
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                RatingModel model1 = dataSnapshot.getValue(RatingModel.class);
+                                list.add(model1);
+                            }
+                        }
+
+                        if (list.size() > 0){
+                            binding.noReviewLay.setVisibility(View.GONE);
+                            binding.recylerReview.setVisibility(View.VISIBLE);
+                        } else {
+                            binding.noReviewLay.setVisibility(View.VISIBLE);
+                            binding.recylerReview.setVisibility(View.GONE);
+                        }
+
+                        RatingAdapter adapter = new RatingAdapter(DetailViewActivity.this, list);
+                        binding.recylerReview.setAdapter(adapter);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(DetailViewActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void addReview(SpaceModel model, UserModel userModel) {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.add_review);
+        dialog.setCancelable(true);
+
+        AtomicInteger starCount = new AtomicInteger();
+        starCount.set(0);
+
+        EditText message = dialog.findViewById(R.id.message);
+        Button cancel = dialog.findViewById(R.id.cancelBtn);
+        Button add = dialog.findViewById(R.id.addBtn);
+
+        ImageView star1, star2, star3, star4, star5;
+
+        star1 = dialog.findViewById(R.id.star1);
+        star2 = dialog.findViewById(R.id.star2);
+        star3 = dialog.findViewById(R.id.star3);
+        star4 = dialog.findViewById(R.id.star4);
+        star5 = dialog.findViewById(R.id.star5);
+
+        cancel.setOnClickListener(v -> {
+            dialog.cancel();
+        });
+
+        add.setOnClickListener(v -> {
+            Map<String, Object> rating = new HashMap<>();
+            if (starCount.get() == 0 || message.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Please Add A Review First", Toast.LENGTH_SHORT).show();
+            } else {
+                Constants.showDialog();
+                dialog.dismiss();
+                RatingModel ratingModel = new RatingModel(
+                        userModel.getImage(), userModel.getName(), message.getText().toString(),
+                        starCount.get(), new Date().getTime()
+                );
+
+                if (starCount.get() == 5) {
+                    rating.put("star5", (model.getStar5() + 1));
+                } else if (starCount.get() == 4) {
+                    rating.put("star4", (model.getStar4() + 1));
+                } else if (starCount.get() == 3) {
+                    rating.put("star3", (model.getStar3() + 1));
+                } else if (starCount.get() == 2) {
+                    rating.put("star2", (model.getStar2() + 1));
+                } else if (starCount.get() == 1) {
+                    rating.put("star1", (model.getStar1() + 1));
+                }
+                rating.put("ratingCount", (model.getRatingCount() + 1));
+
+                Constants.databaseReference().child(Constants.SPACE).child(model.getUserID())
+                        .child(model.getID()).updateChildren(rating)
+                        .addOnSuccessListener(unused -> {
+                            Constants.databaseReference().child(Constants.Rating).child(model.getID()).push()
+                                    .setValue(ratingModel).addOnSuccessListener(unused1 -> {
+                                        Constants.dismissDialog();
+                                        Toast.makeText(DetailViewActivity.this, "Thanks for your rating", Toast.LENGTH_SHORT).show();
+                                    }).addOnFailureListener(e -> {
+                                        Constants.dismissDialog();
+                                        Toast.makeText(DetailViewActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    });
+                        }).addOnFailureListener(e -> {
+                            Constants.dismissDialog();
+                            Toast.makeText(DetailViewActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+            }
+        });
+
+        star1.setOnClickListener(v -> {
+            star1.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            star2.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_grey));
+            star3.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_grey));
+            star4.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_grey));
+            star5.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_grey));
+            starCount.set(1);
+        });
+        star2.setOnClickListener(v -> {
+            star1.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            star2.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            star3.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_grey));
+            star4.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_grey));
+            star5.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_grey));
+            starCount.set(2);
+        });
+        star3.setOnClickListener(v -> {
+            star1.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            star2.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            star3.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            star4.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_grey));
+            star5.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_grey));
+            starCount.set(3);
+        });
+        star4.setOnClickListener(v -> {
+            star1.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            star2.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            star3.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            star4.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            star5.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_grey));
+            starCount.set(4);
+        });
+        star5.setOnClickListener(v -> {
+            star1.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            star2.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            star3.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            star4.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            star5.setImageDrawable(getResources().getDrawable(R.drawable.star_rate_yellow));
+            starCount.set(5);
+        });
+
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().setGravity(Gravity.CENTER);
 
     }
 

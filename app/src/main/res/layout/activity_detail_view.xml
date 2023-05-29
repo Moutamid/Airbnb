@@ -246,6 +246,34 @@
                 android:layout_marginTop="12sp"
                 android:text="@string/lorem" />
 
+            <TextView
+                android:id="@+id/review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:lineHeight="20sp"
+                android:textSize="16sp"
+                android:layout_marginTop="12sp"
+                android:text="@string/leave_a_review" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recylerReview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:listitem="@layout/rating_card"/>
+
+            <TextView
+                android:id="@+id/noReviewLay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:lineHeight="20sp"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_marginTop="12sp"
+                android:text="Become first to review" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
