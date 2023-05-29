@@ -89,24 +89,19 @@ public class ProfileFragment extends Fragment {
         });
 
         Constants.databaseReference().child(Constants.USER).child(Constants.auth().getCurrentUser().getUid())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()){
-                            UserModel userModel = snapshot.getValue(UserModel.class);
-                            binding.name.setText(userModel.getName());
-                            binding.email.setText(userModel.getEmail());
-                            Glide.with(requireContext()).load(userModel.getImage()).placeholder(R.drawable.profile_icon).into(binding.profileIcon);
-                        }
-                        Constants.dismissDialog();
+                .get().addOnSuccessListener(snapshot -> {
+                    if (snapshot.exists()){
+                        UserModel userModel = snapshot.getValue(UserModel.class);
+                        binding.name.setText(userModel.getName());
+                        binding.email.setText(userModel.getEmail());
+                        Glide.with(binding.getRoot().getContext()).load(userModel.getImage()).placeholder(R.drawable.profile_icon).into(binding.profileIcon);
                     }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Constants.dismissDialog();
-                        Toast.makeText(requireContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                    Constants.dismissDialog();
+                }).addOnFailureListener(e -> {
+                    Constants.dismissDialog();
+                    Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+
 
         return binding.getRoot();
     }

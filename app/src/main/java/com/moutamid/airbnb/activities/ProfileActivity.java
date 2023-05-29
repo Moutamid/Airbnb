@@ -3,6 +3,7 @@ package com.moutamid.airbnb.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -26,6 +27,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         binding.back.setOnClickListener(v -> {
             finish();
+        });
+
+        binding.edit.setOnClickListener(v -> {
+            startActivity(new Intent(this, EditProfileActivity.class));
         });
 
         Constants.databaseReference().child(Constants.USER).child(Constants.auth().getCurrentUser().getUid())
