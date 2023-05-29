@@ -1,9 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12sp"
+    android:background="@color/back"
     tools:context=".activities.SearchActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Search place by city or country"
+            android:fontFamily="@font/roboto"
+            android:textSize="16sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white" />
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12sp"
+            android:background="@drawable/et_bg"
+            android:backgroundTint="@color/back"
+            android:layout_marginStart="15sp"
+            android:src="@drawable/back" />
+
+    </RelativeLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxStrokeWidth="0sp"
+        app:boxStrokeWidthFocused="0sp"
+        app:boxCornerRadiusTopEnd="6sp"
+        app:boxCornerRadiusTopStart="6sp"
+        app:boxCornerRadiusBottomEnd="6sp"
+        app:boxCornerRadiusBottomStart="6sp"
+        android:layout_marginStart="7sp"
+        android:layout_marginEnd="15sp"
+        android:layout_marginTop="8sp"
+        app:boxBackgroundColor="@color/dark"
+        app:startIconDrawable="@drawable/search"
+        android:hint="Search..."
+        app:hintTextColor="@color/text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/search"
+        android:layout_marginTop="10sp" />
+</LinearLayout>
