@@ -126,30 +126,56 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/chatBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardCornerRadius="8sp"
                 android:layout_marginTop="12sp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                app:cardElevation="0sp">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profileImage"
-                    android:layout_width="70sp"
-                    android:layout_height="70sp"
-                    android:src="@drawable/profile_icon" />
-
-                <TextView
-                    android:id="@+id/userName"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:padding="12sp"
-                    android:text="Hosted by Suleman"
-                    android:fontFamily="@font/roboto_bold"
-                    android:textSize="22sp"
-                    android:textColor="@color/white" />
+                    android:orientation="horizontal">
 
-            </LinearLayout>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profileImage"
+                        android:layout_width="70sp"
+                        android:layout_height="70sp"
+                        android:src="@drawable/profile_icon" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/userName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="12sp"
+                            android:text="Hosted by Suleman"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textSize="22sp"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="12sp"
+                            android:text="Chat with the hoster"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="16sp"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
                 android:layout_width="wrap_content"

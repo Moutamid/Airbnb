@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Airbnb"
         tools:targetApi="31">
         <activity
+            android:name=".activities.LoginEmailActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.SearchListActivity"
             android:exported="false" />
         <activity

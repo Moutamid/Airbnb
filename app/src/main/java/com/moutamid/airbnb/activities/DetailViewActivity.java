@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import com.moutamid.airbnb.R;
 import com.moutamid.airbnb.adapters.RatingAdapter;
 import com.moutamid.airbnb.constant.Constants;
 import com.moutamid.airbnb.databinding.ActivityDetailViewBinding;
+import com.moutamid.airbnb.models.ChatListModel;
+import com.moutamid.airbnb.models.ChatModel;
 import com.moutamid.airbnb.models.RatingModel;
 import com.moutamid.airbnb.models.SpaceModel;
 import com.moutamid.airbnb.models.UserModel;
@@ -40,7 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DetailViewActivity extends AppCompatActivity {
     ActivityDetailViewBinding binding;
-    UserModel userModel;
+    UserModel userModel, loginUser;
     ArrayList<String> images;
     boolean isFavrt = false;
     ArrayList<RatingModel> list;
@@ -69,6 +72,11 @@ public class DetailViewActivity extends AppCompatActivity {
 
         binding.review.setOnClickListener(v -> {
             addReview(model, userModel);
+        });
+
+        binding.chatBtn.setOnClickListener(v -> {
+            Constants.showDialog();
+            chatWithHoster(model);
         });
 
         getRating(model);
@@ -109,6 +117,75 @@ public class DetailViewActivity extends AppCompatActivity {
                     }
                 });
 
+        Constants.databaseReference().child(Constants.USER).child(Constants.auth().getCurrentUser().getUid())
+                .get().addOnSuccessListener(dataSnapshot -> {
+                    if (dataSnapshot.exists()){
+                        loginUser = dataSnapshot.getValue(UserModel.class);
+                    }
+                });
+
+    }
+
+    private void chatWithHoster(SpaceModel model) {
+        long date = new Date().getTime();
+        ChatModel conversation = new ChatModel(
+                "Hey There!",
+                Constants.auth().getCurrentUser().getUid(),
+                model.getUserID(),
+                loginUser.getImage(),
+                date,
+                loginUser.getName()
+        );
+        Constants.databaseReference().child(Constants.CHAT).child(Constants.auth().getCurrentUser().getUid())
+                .child(model.getUserID())
+                .push()
+                .setValue(conversation)
+                .addOnSuccessListener(unused -> {
+                    sellerSide(model, date);
+                }).addOnFailureListener(e -> {
+
+                });
+    }
+
+    private void sellerSide(SpaceModel model, long date) {
+        ChatModel conversation = new ChatModel(
+                "Hey There!",
+                Constants.auth().getCurrentUser().getUid(),
+                model.getUserID(),
+                userModel.getImage(),
+                date,
+                userModel.getName()
+        );
+        Constants.databaseReference().child(Constants.CHAT).child(model.getUserID())
+                .child(Constants.auth().getCurrentUser().getUid())
+                .push()
+                .setValue(conversation)
+                .addOnSuccessListener(unused -> {
+
+                    ChatListModel chatListModel = new ChatListModel(
+                            model.getUserID(), userModel.getImage(), userModel.getName(), "Hey There!", date
+                    );
+
+                    Constants.databaseReference().child(Constants.CHAT_LIST).child(Constants.auth().getCurrentUser().getUid())
+                            .child(userModel.getID()).setValue(chatListModel)
+                            .addOnSuccessListener(unused1 -> {
+                                ChatListModel chatList = new ChatListModel(
+                                        Constants.auth().getCurrentUser().getUid(), loginUser.getImage(), loginUser.getName(), "Hey There!", date
+                                );
+
+                                Constants.databaseReference().child(Constants.CHAT_LIST).child(userModel.getID())
+                                        .child(Constants.auth().getCurrentUser().getUid()).setValue(chatList)
+                                        .addOnSuccessListener(unused2 -> {
+                                                Constants.dismissDialog();
+                                                Stash.put("userID", model.getUserID());
+                                                Stash.put("userName", userModel.getName());
+                                                startActivity(new Intent(DetailViewActivity.this, ChatScreenActivity.class));
+                                        });
+                            });
+
+                }).addOnFailureListener(e -> {
+
+                });
     }
 
     private void getRating(SpaceModel model) {

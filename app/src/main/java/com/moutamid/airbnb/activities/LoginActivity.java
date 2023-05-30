@@ -81,6 +81,11 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         });
 
+        binding.login.setOnClickListener(v -> {
+            startActivity(new Intent(this, LoginEmailActivity.class));
+            finish();
+        });
+
         binding.continueBtn.setOnClickListener(v -> {
             if (binding.phone.getText().toString().isEmpty()){
                 Toast.makeText(this, "Please add your phone number", Toast.LENGTH_SHORT).show();

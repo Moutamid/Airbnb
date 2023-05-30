@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/back"
+    tools:context=".activities.LoginEmailActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Log with Email &amp; Password"
+        android:fontFamily="@font/roboto"
+        android:layout_marginTop="15sp"
+        android:textSize="16sp"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:fontFamily="@font/roboto_bold"
+        android:layout_margin="15sp"
+        android:textSize="20sp"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/et_bg"
+        android:hint=""
+        android:padding="12sp"
+        android:fontFamily="@font/roboto"
+        android:textColorHint="@color/text_off"
+        android:textColor="@color/text"
+        android:inputType="textEmailAddress"
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:fontFamily="@font/roboto_bold"
+        android:layout_margin="15sp"
+        android:textSize="20sp"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/et_bg"
+        android:hint=""
+        android:padding="12sp"
+        android:fontFamily="@font/roboto"
+        android:textColorHint="@color/text_off"
+        android:textColor="@color/text"
+        android:inputType="textPassword"
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp" />
+
+    <Button
+        android:id="@+id/continueBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12sp"
+        android:layout_margin="15sp"
+        android:text="Continue"
+        android:backgroundTint="@color/blue"
+        android:fontFamily="@font/roboto"
+        android:textSize="16sp" />
+
+</LinearLayout>
