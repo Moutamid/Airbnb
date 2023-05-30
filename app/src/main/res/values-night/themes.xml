@@ -13,6 +13,11 @@
         <item name="android:statusBarColor">@color/back</item>
     </style>
 
+    <style name="calender">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
     <style name="Orange" parent="Theme.Material3.Dark.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/blue</item>

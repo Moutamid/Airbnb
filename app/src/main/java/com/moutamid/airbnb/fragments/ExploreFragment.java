@@ -67,7 +67,7 @@ public class ExploreFragment extends Fragment {
                         }
                         Constants.dismissDialog();
 
-                        ExploreAdapter adapter = new ExploreAdapter(requireContext(), spaceList);
+                        ExploreAdapter adapter = new ExploreAdapter(binding.getRoot().getContext(), spaceList);
                         binding.recycler.setAdapter(adapter);
 
                     }

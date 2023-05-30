@@ -8,7 +8,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -31,14 +34,24 @@ import com.moutamid.airbnb.databinding.ActivityDetailViewBinding;
 import com.moutamid.airbnb.models.ChatListModel;
 import com.moutamid.airbnb.models.ChatModel;
 import com.moutamid.airbnb.models.RatingModel;
+import com.moutamid.airbnb.models.ReservationModel;
 import com.moutamid.airbnb.models.SpaceModel;
 import com.moutamid.airbnb.models.UserModel;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.OnRangeSelectedListener;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DetailViewActivity extends AppCompatActivity {
@@ -124,6 +137,10 @@ public class DetailViewActivity extends AppCompatActivity {
                     }
                 });
 
+        binding.reserve.setOnClickListener(v -> {
+            showReserve(model);
+        });
+
     }
 
     private void chatWithHoster(SpaceModel model) {
@@ -145,6 +162,93 @@ public class DetailViewActivity extends AppCompatActivity {
                 }).addOnFailureListener(e -> {
 
                 });
+
+
+    }
+
+    private void showReserve(SpaceModel model) {
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.reservation_layout);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCancelable(true);
+
+        MaterialCalendarView calendarView = dialog.findViewById(R.id.calendarView);
+
+        TextView price, date, close;
+
+        price = dialog.findViewById(R.id.price);
+        date = dialog.findViewById(R.id.date);
+        close = dialog.findViewById(R.id.close);
+
+        Button reserve = dialog.findViewById(R.id.reserve);
+
+        price.setText("$" + model.getPrice());
+
+        close.setOnClickListener(v -> dialog.dismiss());
+
+        date.setText(model.getStartDate() + " - " + model.getEndDate());
+
+        final Date[] endDate = new Date[1];
+        final Date[] startDate = new Date[1];
+        final double[] PRICE = {model.getPrice()};
+        startDate[0] = new Date(model.getStartTime());
+        endDate[0] = new Date(model.getEndTime());
+
+        calendarView.setLeftArrow(R.drawable.left_arrow);
+        calendarView.setRightArrow(R.drawable.right_arrow);
+
+      //  calendarView.setDateSelected(startDate[0], true);
+
+        calendarView.setOnRangeSelectedListener(new OnRangeSelectedListener() {
+            @Override
+            public void onRangeSelected(@NonNull MaterialCalendarView widget, @NonNull List<CalendarDay> dates) {
+                 startDate[0] = new Date(
+                        dates.get(0).getYear(),
+                        dates.get(0).getMonth()-1,
+                        dates.get(0).getDay()
+                );
+
+                endDate[0] = new Date(
+                        dates.get(dates.size()-1).getYear(),
+                        dates.get(dates.size()-1).getMonth()-1,
+                        dates.get(dates.size()-1).getDay()
+                );
+                String dd = Constants.getDate(startDate[0].getTime()) + " - " + Constants.getDate(endDate[0].getTime());
+                date.setText(dd);
+                double pp = model.getPrice();
+                double aa = 0;
+                for (int i = 0; i < dates.size(); i++) {
+                    aa += pp;
+                }
+                aa = aa - pp;
+                PRICE[0] = aa;
+                price.setText("$" + aa);
+            }
+        });
+
+        reserve.setOnClickListener(v -> {
+            String ID = UUID.randomUUID().toString();
+            ReservationModel model1 = new ReservationModel(
+                    ID, model, PRICE[0], Constants.getDate(startDate[0].getTime()), Constants.getDate(endDate[0].getTime()),
+                    startDate[0].getTime(), endDate[0].getTime()
+            );
+            dialog.dismiss();
+            Constants.showDialog();
+
+            Constants.databaseReference().child(Constants.Reservations).child(Constants.auth().getCurrentUser().getUid())
+                    .child(ID).setValue(model1).addOnSuccessListener(unused -> {
+                        Constants.dismissDialog();
+                        Toast.makeText(this, "Your reservation is placed", Toast.LENGTH_SHORT).show();
+                    }).addOnFailureListener(e -> {
+                        Constants.dismissDialog();
+                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+
+        });
+
+        dialog.show();
+
     }
 
     private void sellerSide(SpaceModel model, long date) {

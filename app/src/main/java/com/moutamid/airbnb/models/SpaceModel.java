@@ -8,10 +8,11 @@ public class SpaceModel {
     long timeStamp;
     long guestNum, bedNum, batNum;
     String startDate, endDate;
+    long startTime, endTime;
     long star1,star2,star3,star4,star5, ratingCount;
     public SpaceModel() {}
 
-    public SpaceModel(String ID, String userID, String name, String image, String description, String city, String country, double price, long timeStamp, long guestNum, long bedNum, long batNum, String startDate, String endDate, long star1, long star2, long star3, long star4, long star5, long ratingCount) {
+    public SpaceModel(String ID, String userID, String name, String image, String description, String city, String country, double price, long timeStamp, long guestNum, long bedNum, long batNum, String startDate, String endDate, long startTime, long endTime, long star1, long star2, long star3, long star4, long star5, long ratingCount) {
         this.ID = ID;
         this.userID = userID;
         this.name = name;
@@ -26,6 +27,8 @@ public class SpaceModel {
         this.batNum = batNum;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.star1 = star1;
         this.star2 = star2;
         this.star3 = star3;
@@ -192,5 +195,21 @@ public class SpaceModel {
 
     public void setRatingCount(long ratingCount) {
         this.ratingCount = ratingCount;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 }

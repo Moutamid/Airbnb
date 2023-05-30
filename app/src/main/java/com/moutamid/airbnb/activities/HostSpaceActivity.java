@@ -45,6 +45,9 @@ public class HostSpaceActivity extends AppCompatActivity {
     final Calendar calendar = Calendar.getInstance();
     private static final int PICK_FROM_GALLERY = 1;
     private static final int PICK_FROM_CAMERA = 2;
+
+    long startTime, endTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,10 +162,12 @@ public class HostSpaceActivity extends AppCompatActivity {
     }
 
     private void updateLabelEndDate() {
+        endTime = calendar.getTime().getTime();
         binding.endDate.setText(Constants.getDate(calendar.getTime().getTime()));
     }
 
     private void updateLabelStartDate() {
+        startTime = calendar.getTime().getTime();
         binding.startDate.setText(Constants.getDate(calendar.getTime().getTime()));
     }
 
@@ -260,6 +265,7 @@ public class HostSpaceActivity extends AppCompatActivity {
                 Double.parseDouble(binding.price.getText().toString()), new Date().getTime(), Long.parseLong(binding.guests.getText().toString()),
                 Long.parseLong(binding.beds.getText().toString()), Long.parseLong(binding.baths.getText().toString()),
                 binding.startDate.getText().toString(), binding.endDate.getText().toString(),
+                startTime, endTime,
                 0,0,0,0,0,0
         );
 
