@@ -68,9 +68,9 @@ public class ChatScreenActivity extends AppCompatActivity {
                         binding.message.getText().toString(),
                         Constants.auth().getCurrentUser().getUid(),
                         ID,
-                        image,
+                        loginUser.getImage(),
                         date,
-                        name
+                        loginUser.getName()
                 );
                 Constants.databaseReference().child(Constants.CHAT).child(Constants.auth().getCurrentUser().getUid())
                         .child(ID)
@@ -89,8 +89,8 @@ public class ChatScreenActivity extends AppCompatActivity {
     private void reciver(String ID, long date) {
         ChatModel conversation = new ChatModel(
                 binding.message.getText().toString(),
-                ID,
                 Constants.auth().getCurrentUser().getUid(),
+                ID,
                 loginUser.getImage(),
                 date,
                 loginUser.getName()
