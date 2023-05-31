@@ -13,11 +13,13 @@ import com.fxn.stash.Stash;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.moutamid.airbnb.adapters.ChatAdapter;
 import com.moutamid.airbnb.constant.Constants;
 import com.moutamid.airbnb.databinding.ActivityChatScreenBinding;
 import com.moutamid.airbnb.models.ChatModel;
 import com.moutamid.airbnb.models.UserModel;
+import com.moutamid.airbnb.notifications.FcmNotificationsSender;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -102,12 +104,16 @@ public class ChatScreenActivity extends AppCompatActivity {
                 .addOnSuccessListener(unused -> {
                     Map<String, Object> map = new HashMap<>();
                     map.put("message", binding.message.getText().toString());
+                    map.put("timeStamp", date);
                     binding.message.setText("");
                     Constants.databaseReference().child(Constants.CHAT_LIST).child(ID).child(Constants.auth().getCurrentUser().getUid()).updateChildren(map)
                             .addOnSuccessListener(unused1 -> {
                                 Constants.databaseReference().child(Constants.CHAT_LIST).child(Constants.auth().getCurrentUser().getUid()).child(ID).updateChildren(map)
                                         .addOnSuccessListener(unused4 -> {
-
+                                            new FcmNotificationsSender(
+                                                    "/topics/" + ID,  loginUser.getName(),
+                                                    map.get("message").toString(),   getApplicationContext(),
+                                                    ChatScreenActivity.this).SendNotifications();
                                         });
                             });
                 }).addOnFailureListener(e -> {

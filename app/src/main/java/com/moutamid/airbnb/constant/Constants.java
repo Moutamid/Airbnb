@@ -32,6 +32,8 @@ public class Constants {
     static Dialog loading_dialog;
     public static final int RC_SIGN_IN = 9001;
     public static final String USER = "user";
+    public static final String KEY = "KEY";
+    public static final String PAUSE_STATUS = "PAUSE_STATUS";
     public static final String Reservations = "Reservations";
     public static final String MODEL = "model";
     public static final String CHAT = "chats";
@@ -43,10 +45,14 @@ public class Constants {
     public static final String SPACE = "space";
     public static final String DATE_FORMAT = "dd/MM/yyyy";
     public static final String YEAR_FORMAT = "yyyy";
+    public static final String TIME = "hh:mm aa";
     public static final String DATE = "dd MMM";
 
     public static String getFormatedDate(long date){
         return new SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(date);
+    }
+    public static String getFormatedTime(long date){
+        return new SimpleDateFormat(TIME, Locale.getDefault()).format(date);
     }
     public static String getFormatedYear(long date){
         return new SimpleDateFormat(YEAR_FORMAT, Locale.getDefault()).format(date);

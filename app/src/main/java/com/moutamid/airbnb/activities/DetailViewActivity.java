@@ -37,6 +37,7 @@ import com.moutamid.airbnb.models.RatingModel;
 import com.moutamid.airbnb.models.ReservationModel;
 import com.moutamid.airbnb.models.SpaceModel;
 import com.moutamid.airbnb.models.UserModel;
+import com.moutamid.airbnb.notifications.FcmNotificationsSender;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
@@ -238,8 +239,18 @@ public class DetailViewActivity extends AppCompatActivity {
 
             Constants.databaseReference().child(Constants.Reservations).child(Constants.auth().getCurrentUser().getUid())
                     .child(ID).setValue(model1).addOnSuccessListener(unused -> {
-                        Constants.dismissDialog();
-                        Toast.makeText(this, "Your reservation is placed", Toast.LENGTH_SHORT).show();
+                        Constants.databaseReference().child(Constants.Reservations).child(model.getUserID())
+                                .child(ID).setValue(model1).addOnSuccessListener(unused2 -> {
+                                    Constants.dismissDialog();
+                                    new FcmNotificationsSender(
+                                            "/topics/" + model.getUserID(),  "Reservation Alert",
+                                            "Someone want to reserve your place check it out",   getApplicationContext(),
+                                            DetailViewActivity.this).SendNotifications();
+                                    Toast.makeText(this, "Your reservation is placed", Toast.LENGTH_SHORT).show();
+                                }).addOnFailureListener(e -> {
+                                    Constants.dismissDialog();
+                                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                });
                     }).addOnFailureListener(e -> {
                         Constants.dismissDialog();
                         Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();

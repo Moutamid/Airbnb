@@ -49,7 +49,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatVH> {
         ChatModel model = list.get(holder.getAbsoluteAdapterPosition());
 
         holder.message.setText(model.getMessage());
-        holder.time.setText(Constants.getFormatedDate(model.getTimestamps()));
+        holder.time.setText(Constants.getFormatedTime(model.getTimestamps()));
         Glide.with(context).load(model.getImage()).placeholder(R.drawable.profile_icon).into(holder.imageView);
 
     }

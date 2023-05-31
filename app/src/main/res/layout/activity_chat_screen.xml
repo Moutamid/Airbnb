@@ -60,6 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12sp"
+            android:maxHeight="100sp"
+            android:inputType="textMultiLine"
             android:hint="Your Message..."
             android:layout_weight="1"
             android:fontFamily="@font/roboto"

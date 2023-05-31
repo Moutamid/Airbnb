@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.moutamid.airbnb.R;
 import com.moutamid.airbnb.activities.SearchActivity;
 import com.moutamid.airbnb.adapters.ExploreAdapter;
@@ -37,6 +38,8 @@ public class ExploreFragment extends Fragment {
 
         binding.recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recycler.setHasFixedSize(false);
+
+        FirebaseMessaging.getInstance().subscribeToTopic(Constants.auth().getCurrentUser().getUid());
 
         spaceList = new ArrayList<>();
 

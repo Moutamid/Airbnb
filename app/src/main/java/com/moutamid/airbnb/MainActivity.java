@@ -1,11 +1,20 @@
 package com.moutamid.airbnb;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.fxn.stash.Stash;
 import com.google.android.material.shape.ShapeAppearanceModel;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.moutamid.airbnb.constant.Constants;
 import com.moutamid.airbnb.databinding.ActivityMainBinding;
 import com.moutamid.airbnb.fragments.ExploreFragment;
@@ -27,6 +36,29 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNav.setItemActiveIndicatorShapeAppearance(new ShapeAppearanceModel().withCornerSize(50).toBuilder().build());
         binding.bottomNav.setItemActiveIndicatorHeight(100);
         binding.bottomNav.setItemActiveIndicatorWidth(100);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (
+                    (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)
+            ) {
+                shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS);
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 1);
+            }
+        }
+
+        FirebaseMessaging.getInstance().subscribeToTopic(Constants.auth().getCurrentUser().getUid())
+                .addOnSuccessListener(unused -> {
+                    // Toast.makeText(this, "Subscribed", Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(e -> {
+                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                });
+
+
+        Constants.databaseReference().child("serverKey").get().addOnSuccessListener(dataSnapshot -> {
+            String key = dataSnapshot.getValue().toString();
+            Stash.put(Constants.KEY, key);
+        });
 
         getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, new ExploreFragment()).commit();
         binding.bottomNav.setSelectedItemId(R.id.nav_explore);

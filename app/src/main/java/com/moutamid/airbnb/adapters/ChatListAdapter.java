@@ -46,8 +46,12 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
 
         String today = Constants.getFormatedDate(new Date().getTime());
         String message = Constants.getFormatedDate(model.getTimeStamp());
+        String time = Constants.getFormatedTime(new Date().getTime());
+        String ttt = Constants.getFormatedTime(model.getTimeStamp());
 
-        if (today.equals(message)){
+        if(time.equals(ttt)) {
+            holder.date.setText("Now");
+        } else if (today.equals(message)){
             holder.date.setText("Today");
         } else {
             holder.date.setText(Constants.getDate(model.getTimeStamp()));
