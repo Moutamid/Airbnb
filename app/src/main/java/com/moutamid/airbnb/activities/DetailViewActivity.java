@@ -239,7 +239,7 @@ public class DetailViewActivity extends AppCompatActivity {
 
             Constants.databaseReference().child(Constants.Reservations).child(Constants.auth().getCurrentUser().getUid())
                     .child(ID).setValue(model1).addOnSuccessListener(unused -> {
-                        Constants.databaseReference().child(Constants.Reservations).child(model.getUserID())
+                        Constants.databaseReference().child(Constants.Reservations).child(Constants.INCOMING).child(model.getUserID())
                                 .child(ID).setValue(model1).addOnSuccessListener(unused2 -> {
                                     Constants.dismissDialog();
                                     new FcmNotificationsSender(

@@ -22,9 +22,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.airbnb.R;
 import com.moutamid.airbnb.SplashScreenActivity;
+import com.moutamid.airbnb.activities.FlightBookingActivity;
 import com.moutamid.airbnb.activities.HostSpaceActivity;
 import com.moutamid.airbnb.activities.MySpaceActivity;
 import com.moutamid.airbnb.activities.ProfileActivity;
+import com.moutamid.airbnb.activities.ReservationsActivity;
 import com.moutamid.airbnb.constant.Constants;
 import com.moutamid.airbnb.databinding.FragmentProfileBinding;
 import com.moutamid.airbnb.models.UserModel;
@@ -50,6 +52,14 @@ public class ProfileFragment extends Fragment {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso);
+
+        binding.reservation.setOnClickListener(v -> {
+            startActivity(new Intent(requireContext(), ReservationsActivity.class));
+        });
+
+        binding.flight.setOnClickListener(v -> {
+            startActivity(new Intent(requireContext(), FlightBookingActivity.class));
+        });
 
         binding.logout.setOnClickListener(v -> {
             new AlertDialog.Builder(requireContext())

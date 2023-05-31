@@ -134,6 +134,60 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:fontFamily="@font/roboto"
+                android:textSize="24sp"
+                android:layout_marginTop="20sp"
+                android:text="Reservations" />
+
+            <Button
+                android:id="@+id/reservation"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:drawableLeft="@drawable/house"
+                android:drawablePadding="12sp"
+                android:drawableTint="@color/white"
+                android:fontFamily="@font/roboto"
+                android:gravity="start|center_vertical"
+                android:padding="12sp"
+                android:drawableRight="@drawable/right"
+                android:text="\t\tReservation Requests"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:fontFamily="@font/roboto"
+                android:textSize="24sp"
+                android:layout_marginTop="20sp"
+                android:text="Flight Booking" />
+
+            <Button
+                android:id="@+id/flight"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:drawableLeft="@drawable/plane"
+                android:drawablePadding="12sp"
+                android:drawableTint="@color/white"
+                android:fontFamily="@font/roboto"
+                android:gravity="start|center_vertical"
+                android:padding="12sp"
+                android:drawableRight="@drawable/right"
+                android:text="\t\tBook your flight"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

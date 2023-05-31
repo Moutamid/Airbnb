@@ -33,6 +33,7 @@ public class Constants {
     public static final int RC_SIGN_IN = 9001;
     public static final String USER = "user";
     public static final String KEY = "KEY";
+    public static final String INCOMING = "incoming";
     public static final String PAUSE_STATUS = "PAUSE_STATUS";
     public static final String Reservations = "Reservations";
     public static final String MODEL = "model";
@@ -135,6 +136,7 @@ public class Constants {
 
         }).start();
     }
+
     public static FirebaseAuth auth() {
         return FirebaseAuth.getInstance();
     }
