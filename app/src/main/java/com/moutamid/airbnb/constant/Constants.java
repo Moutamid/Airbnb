@@ -1,5 +1,6 @@
 package com.moutamid.airbnb.constant;
 
+import com.fxn.stash.Stash;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -33,7 +34,14 @@ public class Constants {
     public static final int RC_SIGN_IN = 9001;
     public static final String USER = "user";
     public static final String KEY = "KEY";
+    public static final String Leaving = "Leaving";
+    public static final String GOING = "GOING";
+    public static final String TRIP = "TRIP";
+    public static final String departureDate = "departureDate";
+    public static final String returingDate = "returingDate";
     public static final String INCOMING = "incoming";
+    public static final String ONEWAY_TRIP = "https://api.flightapi.io/onewaytrip/64772255978ad745f48c1969/";
+    public static final String ROUND_TRIP = "https://api.flightapi.io/roundtrip/64772255978ad745f48c1969/";
     public static final String PAUSE_STATUS = "PAUSE_STATUS";
     public static final String Reservations = "Reservations";
     public static final String MODEL = "model";
@@ -48,9 +56,24 @@ public class Constants {
     public static final String YEAR_FORMAT = "yyyy";
     public static final String TIME = "hh:mm aa";
     public static final String DATE = "dd MMM";
+    public static final String DEPARTURE_FORMAT = "EEE, dd MMM yyyy";
+    public static final String API_DATE = "yyyy-MM-dd";
+
+    public static String getOnewayTrip(){
+        return ONEWAY_TRIP + Stash.getString(Leaving) +"/" + Stash.getString(GOING) + "/" + getAPI_DATE(Stash.getLong(departureDate)) + "/1/0/0/Economy/USD";
+    }
+    public static String getRoundTrip(){
+        return ROUND_TRIP + Stash.getString(Leaving) +"/" + Stash.getString(GOING) + "/" + getAPI_DATE(Stash.getLong(departureDate)) + "/" + getAPI_DATE(Stash.getLong(returingDate))  + "/1/0/1/Economy/USD";
+    }
 
     public static String getFormatedDate(long date){
         return new SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(date);
+    }
+    public static String getAPI_DATE(long date){
+        return new SimpleDateFormat(API_DATE, Locale.getDefault()).format(date);
+    }
+    public static String getDepartureFormat(long date){
+        return new SimpleDateFormat(DEPARTURE_FORMAT, Locale.getDefault()).format(date);
     }
     public static String getFormatedTime(long date){
         return new SimpleDateFormat(TIME, Locale.getDefault()).format(date);
