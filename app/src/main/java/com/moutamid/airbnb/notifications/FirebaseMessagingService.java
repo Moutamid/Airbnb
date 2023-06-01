@@ -53,7 +53,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         ((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).vibrate(new long[]{100, 300, 300, 300}, -1);
 
 //        int resourceImage = getResources().getIdentifier(remoteMessage.getNotification().getIcon(), "drawable", getPackageName());
-        NotificationCompat.Builder builder = new NotificationCompat.Builder((Context) this, "CHANNEL_ID");
+        NotificationCompat.Builder builder = new NotificationCompat.Builder((Context) this, "Your_channel_id");
 //        if (Build.VERSION.SDK_INT >= 21) {
 //            builder.setSmallIcon(resourceImage);
 //        } else {
@@ -70,18 +70,11 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         builder.setAutoCancel(true);
         builder.setPriority(PRIORITY_HIGH);
         this.mNotificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);//"notification"
-        if (Build.VERSION.SDK_INT >= 26) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             this.mNotificationManager.createNotificationChannel(new NotificationChannel("Your_channel_id", "Message Notification", NotificationManager.IMPORTANCE_HIGH));//4
-            builder.setChannelId("Your_channel_idd");
         }
+        builder.setChannelId("Your_channel_id");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         this.mNotificationManager.notify(100, builder.build());
