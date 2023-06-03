@@ -40,8 +40,8 @@ public class Constants {
     public static final String departureDate = "departureDate";
     public static final String returingDate = "returingDate";
     public static final String INCOMING = "incoming";
-    public static final String ONEWAY_TRIP = "https://api.flightapi.io/onewaytrip/64772255978ad745f48c1969/";
-    public static final String ROUND_TRIP = "https://api.flightapi.io/roundtrip/64772255978ad745f48c1969/";
+    public static final String ONEWAY_TRIP = "https://api.flightapi.io/onewaytrip/647b1dc802093300bef86f53/";
+    public static final String ROUND_TRIP = "https://api.flightapi.io/roundtrip/647b1dc802093300bef86f53/";
     public static final String PAUSE_STATUS = "PAUSE_STATUS";
     public static final String Reservations = "Reservations";
     public static final String MODEL = "model";

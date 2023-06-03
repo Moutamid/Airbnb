@@ -38,6 +38,10 @@ public class FlightsResultActivity extends AppCompatActivity {
         binding = ActivityFlightsResultBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.back.setOnClickListener(v -> {
+            finish();
+        });
+
         Constants.initDialog(this);
         Constants.showDialog();
 
@@ -108,8 +112,8 @@ public class FlightsResultActivity extends AppCompatActivity {
                             model.setArrivalAirportCode(obj.getString("arrivalAirportCode"));
                             model.setStopoverCode(obj.getString("stopoverCode"));
                             model.setAllianceCodes(obj.getJSONArray("allianceCodes").getString(0));
-                            model.setAirlines(airlines.getJSONObject(i).getString("name"));
-                            JSONObject all = alliances.getJSONObject(i);
+                            model.setAirlines(airlines.getJSONObject(airlines.length()-1).getString("name"));
+                            JSONObject all = alliances.getJSONObject(obj.getJSONArray("allianceCodes").length()-1);
                             model.setPrice(all.getJSONObject("price").getDouble("totalAmountUsd"));
 
                             list.add(model);

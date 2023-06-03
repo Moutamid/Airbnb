@@ -28,6 +28,10 @@ public class FlightBookingActivity extends AppCompatActivity {
 
         Stash.put(Constants.TRIP, "oneway");
 
+        binding.back.setOnClickListener(v -> {
+            finish();
+        });
+
         binding.onewayTrip.setOnClickListener(v -> {
             Stash.put(Constants.TRIP, "oneway");
             binding.roundTrip.setCardBackgroundColor(getResources().getColor(R.color.dark));
