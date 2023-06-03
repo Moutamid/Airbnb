@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.fxn.stash.Stash;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
+import com.moutamid.airbnb.MainActivity;
 import com.moutamid.airbnb.R;
 import com.moutamid.airbnb.adapters.AddImageAdapter;
 import com.moutamid.airbnb.constant.Constants;
@@ -58,7 +59,7 @@ public class HostSpaceActivity extends AppCompatActivity {
 
         imagesList = new ArrayList<>();
 
-        binding.back.setOnClickListener(v -> finish());
+        binding.back.setOnClickListener(v -> onBackPressed());
 
         DatePickerDialog.OnDateSetListener startDate = (datePicker, year, month, day) -> {
             calendar.set(Calendar.YEAR, year);
@@ -364,5 +365,9 @@ public class HostSpaceActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+    }
 }

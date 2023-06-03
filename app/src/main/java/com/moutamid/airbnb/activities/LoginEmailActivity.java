@@ -37,4 +37,10 @@ public class LoginEmailActivity extends AppCompatActivity {
         });
 
     }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+    }
+
 }

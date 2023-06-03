@@ -110,7 +110,7 @@ public class ProfileFragment extends Fragment {
                             UserModel userModel = snapshot.getValue(UserModel.class);
                             binding.name.setText(userModel.getName());
                             binding.email.setText(userModel.getEmail());
-                            Glide.with(requireContext()).load(userModel.getImage()).placeholder(R.drawable.profile_icon).into(binding.profileIcon);
+                            Glide.with(binding.getRoot().getContext()).load(userModel.getImage()).placeholder(R.drawable.profile_icon).into(binding.profileIcon);
                         }
                         Constants.dismissDialog();
                     }
