@@ -43,7 +43,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
         ReservationModel reservationModel = list.get(holder.getAbsoluteAdapterPosition());
 
         holder.night.setVisibility(View.GONE);
-        holder.price.setText("$" + reservationModel.getPrice());
+        holder.price.setText("£" + reservationModel.getPrice());
         holder.title.setText(model.getName());
         holder.date.setText(reservationModel.getStartDate() + " - " + reservationModel.getEndDate());
         holder.location.setText(model.getCity() + ", " + model.getCountry());

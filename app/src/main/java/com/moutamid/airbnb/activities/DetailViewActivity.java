@@ -184,7 +184,7 @@ public class DetailViewActivity extends AppCompatActivity {
 
         Button reserve = dialog.findViewById(R.id.reserve);
 
-        price.setText("$" + model.getPrice());
+        price.setText("£" + model.getPrice());
 
         close.setOnClickListener(v -> dialog.dismiss());
 
@@ -224,7 +224,7 @@ public class DetailViewActivity extends AppCompatActivity {
                 }
                 aa = aa - pp;
                 PRICE[0] = aa;
-                price.setText("$" + aa);
+                price.setText("£" + aa);
             }
         });
 
@@ -473,7 +473,7 @@ public class DetailViewActivity extends AppCompatActivity {
                         binding.rating.setText("" + average + "(" + model.getRatingCount() + " reviews)");
                         binding.date.setText(model.getStartDate() + " - " + model.getEndDate());
                         binding.location.setText(model.getCity() + ", " + model.getCountry());
-                        binding.price.setText("$" + model.getPrice());
+                        binding.price.setText("£" + model.getPrice());
                         binding.guest.setText(model.getGuestNum() + " guests");
                         binding.bed.setText(model.getBedNum() + " bed");
                         binding.bath.setText(model.getBatNum() + " bath");

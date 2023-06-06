@@ -40,7 +40,7 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ExploreV
     public void onBindViewHolder(@NonNull ExploreVH holder, int position) {
         SpaceModel model = spaceList.get(holder.getAbsoluteAdapterPosition());
 
-        holder.price.setText("$" + model.getPrice());
+        holder.price.setText("£" + model.getPrice());
         holder.title.setText(model.getName());
         holder.date.setText(model.getStartDate() + " - " + model.getEndDate());
         holder.location.setText(model.getCity() + ", " + model.getCountry());

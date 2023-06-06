@@ -34,7 +34,7 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.FlightsV
             FlightsModel model = list.get(holder.getAbsoluteAdapterPosition());
 
             holder.airline.setText(model.getAirlines());
-            holder.price.setText("$" + model.getPrice());
+            holder.price.setText("£" + model.getPrice());
             holder.dest.setText(model.getDepartureAirportCode() + "-" + model.getArrivalAirportCode());
             holder.direct.setText(model.getStopoverCode());
             holder.duration.setText(model.getDuration());
