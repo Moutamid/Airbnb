@@ -62,8 +62,7 @@
             app:OtpItemSpacing="6dp"
             app:OtpState_filled="true"
             app:OtpLineColor="@color/blue"
-            app:OtpViewType="none"
-            />
+            app:OtpViewType="none" />
 
         <EditText
             android:id="@+id/otp"

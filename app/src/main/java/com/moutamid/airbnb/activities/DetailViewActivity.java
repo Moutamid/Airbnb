@@ -8,9 +8,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,20 +35,16 @@ import com.moutamid.airbnb.models.RatingModel;
 import com.moutamid.airbnb.models.ReservationModel;
 import com.moutamid.airbnb.models.SpaceModel;
 import com.moutamid.airbnb.models.UserModel;
-import com.moutamid.airbnb.notifications.FcmNotificationsSender;
+import com.moutamid.airbnb.notifications.FCMNotificationHelper;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnRangeSelectedListener;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -242,10 +236,14 @@ public class DetailViewActivity extends AppCompatActivity {
                         Constants.databaseReference().child(Constants.Reservations).child(Constants.INCOMING).child(model.getUserID())
                                 .child(ID).setValue(model1).addOnSuccessListener(unused2 -> {
                                     Constants.dismissDialog();
-                                    new FcmNotificationsSender(
+                                    new FCMNotificationHelper(DetailViewActivity.this).sendNotification(
+                                            model.getUserID(),"Reservation Alert",
+                                            "Someone want to reserve your place check it out"
+                                    );
+                                    /*new FcmNotificationsSender(
                                             "/topics/" + model.getUserID(),  "Reservation Alert",
                                             "Someone want to reserve your place check it out",   getApplicationContext(),
-                                            DetailViewActivity.this).SendNotifications();
+                                            DetailViewActivity.this).SendNotifications();*/
                                     Toast.makeText(this, "Your reservation is placed", Toast.LENGTH_SHORT).show();
                                 }).addOnFailureListener(e -> {
                                     Constants.dismissDialog();

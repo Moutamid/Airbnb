@@ -13,13 +13,12 @@ import com.fxn.stash.Stash;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.moutamid.airbnb.adapters.ChatAdapter;
 import com.moutamid.airbnb.constant.Constants;
 import com.moutamid.airbnb.databinding.ActivityChatScreenBinding;
 import com.moutamid.airbnb.models.ChatModel;
 import com.moutamid.airbnb.models.UserModel;
-import com.moutamid.airbnb.notifications.FcmNotificationsSender;
+import com.moutamid.airbnb.notifications.FCMNotificationHelper;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -110,10 +109,14 @@ public class ChatScreenActivity extends AppCompatActivity {
                             .addOnSuccessListener(unused1 -> {
                                 Constants.databaseReference().child(Constants.CHAT_LIST).child(Constants.auth().getCurrentUser().getUid()).child(ID).updateChildren(map)
                                         .addOnSuccessListener(unused4 -> {
-                                            new FcmNotificationsSender(
+                                            new FCMNotificationHelper(ChatScreenActivity.this).sendNotification(
+                                                    ID,loginUser.getName(),
+                                                    map.get("message").toString()
+                                            );
+                                            /*new FcmNotificationsSender(
                                                     "/topics/" + ID,  loginUser.getName(),
                                                     map.get("message").toString(),   getApplicationContext(),
-                                                    ChatScreenActivity.this).SendNotifications();
+                                                    ChatScreenActivity.this).SendNotifications();*/
                                         });
                             });
                 }).addOnFailureListener(e -> {

@@ -25,6 +25,7 @@ import com.moutamid.airbnb.fragments.WishlistFragment;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
+    private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +55,19 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 });
 
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(s -> {
+            Log.d("NotificationHelper", "getToken: " + s);
+            Constants.databaseReference().child(Constants.USER).child(Constants.auth().getCurrentUser().getUid()).child("fcmToken").setValue(s);
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        });
 
-        Constants.databaseReference().child("serverKey").get().addOnSuccessListener(dataSnapshot -> {
-            String key = dataSnapshot.getValue().toString();
-            Stash.put(Constants.KEY, key);
+        Constants.databaseReference().child("server_key").get().addOnSuccessListener(dataSnapshot -> {
+            if (dataSnapshot.exists()) {
+                String key = dataSnapshot.getValue().toString();
+                Stash.put(Constants.KEY, key);
+            }
         });
 
         getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, new ExploreFragment()).commit();
