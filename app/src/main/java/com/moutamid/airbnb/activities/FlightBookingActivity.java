@@ -3,15 +3,26 @@ package com.moutamid.airbnb.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fxn.stash.Stash;
+import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.airbnb.R;
 import com.moutamid.airbnb.constant.Constants;
 import com.moutamid.airbnb.databinding.ActivityFlightBookingBinding;
+
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -72,7 +83,6 @@ public class FlightBookingActivity extends AppCompatActivity {
                 Stash.put(Constants.GOING, binding.goingTo.getEditText().getText().toString().toUpperCase(Locale.ROOT));
 
                 startActivity(new Intent(this, FlightsResultActivity.class));
-
             }
         });
 
@@ -83,6 +93,36 @@ public class FlightBookingActivity extends AppCompatActivity {
             new DatePickerDialog(FlightBookingActivity.this, leaving, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
         });
 
+        binding.apiKey.setOnClickListener(v -> {
+            changeAPI();
+        });
+
+    }
+
+    private void changeAPI() {
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.api_key_layout);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(true);
+        dialog.show();
+
+        TextView instructions = dialog.findViewById(R.id.instructions);
+        TextInputLayout apiKey = dialog.findViewById(R.id.apiKey);
+        Button save = dialog.findViewById(R.id.save);
+
+        instructions.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.flightapi.io/"))));
+
+        save.setOnClickListener(v -> {
+            if (apiKey.getEditText().getText().toString().isEmpty()){
+                Toast.makeText(this, "API key is empty", Toast.LENGTH_SHORT).show();
+            } else {
+                Stash.put(Constants.API_KEY, apiKey.getEditText().getText().toString().trim());
+                dialog.dismiss();
+            }
+        });
     }
 
     private void updateLabel() {

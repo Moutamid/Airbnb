@@ -8,4 +8,5 @@
     <string name="close"><u>close</u></string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, aliquam distinctio ea eius incidunt itaque mollitia necessitatibus possimus quaerat ratione sint suscipit tempora temporibus ullam velit! Atque eos expedita omnis quasi quis quisquam similique suscipit!</string>
     <string name="leave_a_review"><u>Leave a review</u></string>
+    <string name="to_get_api_key">To get API key go to <u>https://www.flightapi.io/</u>\n\nLogin/Create Account and go to dashboard here you can get your api key from top</string>
 </resources>

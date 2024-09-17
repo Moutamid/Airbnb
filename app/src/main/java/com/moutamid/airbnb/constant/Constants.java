@@ -1,13 +1,5 @@
 package com.moutamid.airbnb.constant;
 
-import com.fxn.stash.Stash;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.moutamid.airbnb.R;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -16,6 +8,14 @@ import android.os.Build;
 import android.view.Window;
 
 import androidx.appcompat.app.AlertDialog;
+
+import com.fxn.stash.Stash;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.moutamid.airbnb.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,14 +34,15 @@ public class Constants {
     public static final int RC_SIGN_IN = 9001;
     public static final String USER = "user";
     public static final String KEY = "KEY";
+    public static final String API_KEY = "API_KEY";
     public static final String Leaving = "Leaving";
     public static final String GOING = "GOING";
     public static final String TRIP = "TRIP";
     public static final String departureDate = "departureDate";
     public static final String returingDate = "returingDate";
     public static final String INCOMING = "incoming";
-    public static final String ONEWAY_TRIP = "https://api.flightapi.io/onewaytrip/647b1dc802093300bef86f53/";
-    public static final String ROUND_TRIP = "https://api.flightapi.io/roundtrip/647b1dc802093300bef86f53/";
+    public static final String ONEWAY_TRIP = "https://api.flightapi.io/onewaytrip/";
+    public static final String ROUND_TRIP = "https://api.flightapi.io/roundtrip/";
     public static final String PAUSE_STATUS = "PAUSE_STATUS";
     public static final String Reservations = "Reservations";
     public static final String MODEL = "model";
@@ -59,33 +60,39 @@ public class Constants {
     public static final String DEPARTURE_FORMAT = "EEE, dd MMM yyyy";
     public static final String API_DATE = "yyyy-MM-dd";
 
-    public static String getOnewayTrip(){
-        return ONEWAY_TRIP + Stash.getString(Leaving) +"/" + Stash.getString(GOING) + "/" + getAPI_DATE(Stash.getLong(departureDate)) + "/1/0/0/Economy/USD";
-    }
-    public static String getRoundTrip(){
-        return ROUND_TRIP + Stash.getString(Leaving) +"/" + Stash.getString(GOING) + "/" + getAPI_DATE(Stash.getLong(departureDate)) + "/" + getAPI_DATE(Stash.getLong(returingDate))  + "/1/0/1/Economy/USD";
+    public static String getOnewayTrip() {
+        return ONEWAY_TRIP + Stash.getString(API_KEY, "6476fda70bc2b43e1d225d36") + "/" + Stash.getString(Leaving) + "/" + Stash.getString(GOING) + "/" + getAPI_DATE(Stash.getLong(departureDate)) + "/1/0/0/Economy/USD";
     }
 
-    public static String getFormatedDate(long date){
+    public static String getRoundTrip() {
+        return ROUND_TRIP + Stash.getString(API_KEY, "6476fda70bc2b43e1d225d36") + "/" + Stash.getString(Leaving) + "/" + Stash.getString(GOING) + "/" + getAPI_DATE(Stash.getLong(departureDate)) + "/" + getAPI_DATE(Stash.getLong(returingDate)) + "/1/0/1/Economy/USD";
+    }
+
+    public static String getFormatedDate(long date) {
         return new SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(date);
     }
-    public static String getAPI_DATE(long date){
+
+    public static String getAPI_DATE(long date) {
         return new SimpleDateFormat(API_DATE, Locale.getDefault()).format(date);
     }
-    public static String getDepartureFormat(long date){
+
+    public static String getDepartureFormat(long date) {
         return new SimpleDateFormat(DEPARTURE_FORMAT, Locale.getDefault()).format(date);
     }
-    public static String getFormatedTime(long date){
+
+    public static String getFormatedTime(long date) {
         return new SimpleDateFormat(TIME, Locale.getDefault()).format(date);
     }
-    public static String getFormatedYear(long date){
+
+    public static String getFormatedYear(long date) {
         return new SimpleDateFormat(YEAR_FORMAT, Locale.getDefault()).format(date);
     }
-    public static String getDate(long date){
+
+    public static String getDate(long date) {
         return new SimpleDateFormat(DATE, Locale.getDefault()).format(date);
     }
 
-    public static void initDialog(Context context){
+    public static void initDialog(Context context) {
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.loading);
@@ -93,11 +100,11 @@ public class Constants {
         dialog.setCancelable(false);
     }
 
-    public static void showDialog(){
+    public static void showDialog() {
         dialog.show();
     }
 
-    public static void dismissDialog(){
+    public static void dismissDialog() {
         dialog.dismiss();
     }
 

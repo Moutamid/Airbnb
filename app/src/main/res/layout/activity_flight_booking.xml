@@ -146,7 +146,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_margin="10sp"
+                    android:layout_marginVertical="10sp"
+                    android:layout_marginEnd="5sp"
                     app:cardCornerRadius="12sp"
                     app:strokeWidth="0sp"
                     app:cardBackgroundColor="@color/blue"
@@ -170,7 +171,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_margin="10sp"
+                    android:layout_marginStart="5sp"
+                    android:layout_marginVertical="10sp"
                     app:cardCornerRadius="12sp"
                     app:strokeWidth="0sp"
                     app:cardBackgroundColor="@color/dark"
@@ -266,6 +268,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12sp"
                 android:text="Search"
+                android:textSize="18sp"
+                android:fontFamily="@font/roboto" />
+
+            <Button
+                android:id="@+id/apiKey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12sp"
+                android:text="Change API KEY"
                 android:textSize="18sp"
                 android:fontFamily="@font/roboto" />
 

@@ -220,7 +220,6 @@ public class LoginActivity extends AppCompatActivity {
         dialog.getWindow().setGravity(Gravity.CENTER);
     }
 
-
     private void googleSignIn() {
         Constants.showDialog();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
