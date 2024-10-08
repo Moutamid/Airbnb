@@ -110,7 +110,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                                 Constants.databaseReference().child(Constants.CHAT_LIST).child(Constants.auth().getCurrentUser().getUid()).child(ID).updateChildren(map)
                                         .addOnSuccessListener(unused4 -> {
                                             new FCMNotificationHelper(ChatScreenActivity.this).sendNotification(
-                                                    ID,loginUser.getName(),
+                                                    ID, loginUser.getName(),
                                                     map.get("message").toString()
                                             );
                                             /*new FcmNotificationsSender(
