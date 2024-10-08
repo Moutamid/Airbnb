@@ -61,11 +61,11 @@ public class Constants {
     public static final String API_DATE = "yyyy-MM-dd";
 
     public static String getOnewayTrip() {
-        return ONEWAY_TRIP + Stash.getString(API_KEY, "6476fda70bc2b43e1d225d36") + "/" + Stash.getString(Leaving) + "/" + Stash.getString(GOING) + "/" + getAPI_DATE(Stash.getLong(departureDate)) + "/1/0/0/Economy/USD";
+        return ONEWAY_TRIP + Stash.getString(API_KEY, "6705069c810e2baf0592b595") + "/" + Stash.getString(Leaving) + "/" + Stash.getString(GOING) + "/" + getAPI_DATE(Stash.getLong(departureDate)) + "/1/0/0/Economy/USD";
     }
 
     public static String getRoundTrip() {
-        return ROUND_TRIP + Stash.getString(API_KEY, "6476fda70bc2b43e1d225d36") + "/" + Stash.getString(Leaving) + "/" + Stash.getString(GOING) + "/" + getAPI_DATE(Stash.getLong(departureDate)) + "/" + getAPI_DATE(Stash.getLong(returingDate)) + "/1/0/1/Economy/USD";
+        return ROUND_TRIP + Stash.getString(API_KEY, "6705069c810e2baf0592b595") + "/" + Stash.getString(Leaving) + "/" + Stash.getString(GOING) + "/" + getAPI_DATE(Stash.getLong(departureDate)) + "/" + getAPI_DATE(Stash.getLong(returingDate)) + "/1/0/1/Economy/USD";
     }
 
     public static String getFormatedDate(long date) {
